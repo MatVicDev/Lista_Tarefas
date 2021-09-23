@@ -12,7 +12,5 @@ $conexao = new Conexao();
 $tarefaService = new TarefaService($conexao, $tarefa);
 $tarefaService->inserir();
 
-echo '<pre>';
-print_r($tarefaService);
-echo '</pre>';
+header('Location: nova_tarefa.php?inclusao=sucesso');
 ?>
