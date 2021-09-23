@@ -17,9 +17,11 @@ class Conexao
 				"$this->pass"
 			);
 
+			return $conn;
+
 		} catch(PDOException $e) {
 
-			echo '<p>' $e->getMessage() . '</p>';
+			echo '<p>' . $e->getMessage() . '</p>';
 		}
 	}
 }
