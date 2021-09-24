@@ -13,6 +13,53 @@ require_once "tarefa_controller.php";
 		<link rel="stylesheet" href="css/estilo.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+		<script type="text/javascript">
+			
+			function editar(id, txt_tarefa) {
+
+				// Formulário
+				let form = document.createElement('form')
+				form.action = 'tarefa_controller.php?acao=atualizar'
+				form.method = 'post'
+
+				// Input
+				let inputText = document.createElement('input')
+				inputText.type = 'text'
+				inputText.name = 'tarefa'
+				inputText.className = 'form-control'
+				inputText.value = txt_tarefa
+
+				let inputId = document.createElement('input')
+				inputId.type = 'hidden'
+				inputId.name = 'id'
+				inputId.value = id
+
+				// Botão
+				let button = document.createElement('button')
+				button.type = 'submit'
+				button.className = 'btn btn-info'
+				button.innerHTML = 'Atualizar'
+
+				// Incluir o input no formulário
+				form.appendChild(inputText)
+
+				// Incluir o input no formulário
+				form.appendChild(inputId)
+
+				// Incluir o botão no formulário
+				form.appendChild(button)
+
+				// Selecionando a div tarefa
+				let tarefa = document.getElementById('tarefa_' + id)
+
+				// Limpar o texto da tarefa para inclusão do form
+				tarefa.innerHTML = ''
+
+				// incluir input na página
+				tarefa.insertBefore(form, tarefa[0])
+			}
+		</script>
 	</head>
 
 	<body>
@@ -44,10 +91,14 @@ require_once "tarefa_controller.php";
 
 								<?php foreach ($tarefas as $key => $tarefa) { ?>
 									<div class="row mb-3 d-flex align-items-center tarefa">
-										<div class="col-sm-9"><?= $tarefa->tarefa ?> (<?= $tarefa->status ?>)</div>
+										<div class="col-sm-9" id="tarefa_<?= $tarefa->id_tarefa ?>">
+											<?= $tarefa->tarefa ?> (<?= $tarefa->status ?>)
+										</div>
 										<div class="col-sm-3 mt-2 d-flex justify-content-between">
 											<i class="fas fa-trash-alt fa-lg text-danger"></i>
-											<i class="fas fa-edit fa-lg text-info"></i>
+											<i class="fas fa-edit fa-lg text-info" 
+												onclick="editar(<?= $tarefa->id_tarefa ?>, '<?= $tarefa->tarefa ?>')">
+											</i>
 											<i class="fas fa-check-square fa-lg text-success"></i>
 										</div>
 									</div>	
