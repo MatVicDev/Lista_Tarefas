@@ -4,7 +4,7 @@ require_once "tarefa_model.php";
 require_once "tarefa_service.php";
 require_once "conexao.php";
 
-$acao = isset($_GET['acao']) ? $_GET['acao'] : $acao; 
+$acao = isset($_GET['acao']) ? $_GET['acao'] : $acao;
 
 if($acao  == 'inserir') {
 	$tarefa = new Tarefa();
@@ -25,7 +25,7 @@ else if($acao == 'recuperar') {
 	$tarefaService = new TarefaService($conexao, $tarefa);
 	$tarefas = $tarefaService->recuperar();
 }
-else if($acao = 'atualizar') {
+else if($acao == 'atualizar') {
 
 	$tarefa = new Tarefa();
 	$tarefa->__set('id', $_POST['id']);
@@ -36,5 +36,18 @@ else if($acao = 'atualizar') {
 	$tarefaService = new TarefaService($conexao, $tarefa);
 	if($tarefaService->atualizar())
 		header('Location: todas_tarefas.php');
+}
+
+else if($acao == 'remover') {
+
+	$tarefa = new Tarefa();
+	$tarefa->__set('id', $_GET['id']);
+
+	$conexao = new Conexao();
+
+	$tarefaService = new TarefaService($conexao, $tarefa);
+	$tarefaService->remover();
+
+	header('Location: todas_tarefas.php');
 }
 ?>
