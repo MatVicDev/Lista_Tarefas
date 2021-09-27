@@ -64,6 +64,11 @@ require_once "tarefa_controller.php";
 			{	
 				location.href = 'todas_tarefas.php?acao=remover&id=' + id
 			}
+
+			function realizada(id)
+			{
+				location.href = 'todas_tarefas.php?acao=realizada&id=' + id
+			}
 		</script>
 	</head>
 
@@ -103,10 +108,15 @@ require_once "tarefa_controller.php";
 											<i class="fas fa-trash-alt fa-lg text-danger"
 												onclick="remover(<?= $tarefa->id_tarefa ?>)">
 											</i>
-											<i class="fas fa-edit fa-lg text-info" 
-												onclick="editar(<?= $tarefa->id_tarefa ?>, '<?= $tarefa->tarefa ?>')">
-											</i>
-											<i class="fas fa-check-square fa-lg text-success"></i>
+
+											<?php if($tarefa->status != 'realizado') { ?>
+												<i class="fas fa-edit fa-lg text-info"
+													onclick="editar(<?= $tarefa->id_tarefa ?>, '<?= $tarefa->tarefa ?>')">
+												</i>
+												<i class="fas fa-check-square fa-lg text-success"
+													onclick="realizada(<?= $tarefa->id_tarefa ?>)">	
+												</i>
+											<?php } ?>
 										</div>
 									</div>	
 								<?php } ?>

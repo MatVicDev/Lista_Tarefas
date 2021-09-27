@@ -51,6 +51,15 @@ class TarefaService
 		$stmt->bindValue(':ID', $this->tarefa->__get('id'));
 		$stmt->execute();
 	}
+
+	public function marcarRealizada()
+	{
+		$query = 'UPDATE tb_tarefas SET fk_id_status = :ID_STATUS WHERE id_tarefa = :ID';
+		$stmt = $this->conexao->prepare($query);
+		$stmt->bindValue(':ID_STATUS', $this->tarefa->__get('id_status'));
+		$stmt->bindValue(':ID', $this->tarefa->__get('id'));
+		return $stmt->execute();
+	}
 }
 
 
