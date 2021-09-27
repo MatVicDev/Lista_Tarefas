@@ -60,6 +60,24 @@ class TarefaService
 		$stmt->bindValue(':ID', $this->tarefa->__get('id'));
 		return $stmt->execute();
 	}
+
+	public function recuperarTarefasPendentes()
+	{
+		$query = '
+			SELECT 
+				t.id_tarefa, s.status, t.tarefa 
+			FROM 
+				tb_tarefas as t
+			LEFT JOIN
+				tb_status as s ON (t.fk_id_status = s.id_status)
+			WHERE
+				t.fk_id_status = :ID_STATUS
+		';
+		$stmt = $this->conexao->prepare($query);
+		$stmt->bindValue(':ID_STATUS', $this->tarefa->__get('id_status'));
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_OBJ);
+	}
 }
 
 
